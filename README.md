@@ -1,4 +1,5 @@
 **Keyboard With Passive Buzzer and Octave Changing**
+
 In this project, I leveraged Buttons and Passive Buzzer that I have lying around, and build a working Keyboard. It is Piano Keyboard, but with the sound of Passive Buzzer, so buzzing. I used 13 Buttons for one octave 8 Full Tones, and 5 Semitones. I also Added 2 Buttons for changing the octave. There are 6 Octaves In total available (In the range of minimal and maximal frequency which can the Passive Buzzer produce. The lowest Tone is C2, and the highest is C8. I have used list of frequencies I have found online, but some of the frequencies had also decimal places, for example C2 = 65.41, which is a float value, and from what I know the buzzer can only output frequencies inputted as integers, so I had converted it to integers, as showed here: 
 
 int C{65};
