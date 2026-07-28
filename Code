@@ -1,0 +1,309 @@
+const int PIN_C2{4};
+const int PIN_H{5};
+const int PIN_A{6};
+const int PIN_G{7};
+const int PIN_F{8};
+const int PIN_E{9};
+const int PIN_D{10};
+const int PIN_C{18};
+const int PIN_As{12};
+const int PIN_Gs{13};
+const int PIN_Fs{14};
+const int PIN_Ds{15};
+const int PIN_Cs{16};
+const int PIN_BUZZER{21};
+const int PIN_OCUP{2};
+const int PIN_OCDN{1};
+
+int C{65};
+int D{73};
+int E{82};
+int F{87};
+int G{98};
+int A{110};
+int H{123};
+int C2{130};
+int Cs{69};
+int Ds{78};
+int Fs{93};
+int Gs{104};
+int As{117};
+
+
+bool C_playing{false};
+bool D_playing{false};
+bool E_playing{false};
+bool F_playing{false};
+bool G_playing{false};
+bool A_playing{false};
+bool H_playing{false};
+bool C2_playing{false};
+bool Cs_playing{false};
+bool Ds_playing{false};
+bool Fs_playing{false};
+bool Gs_playing{false};
+bool As_playing{false};
+
+int OCUP_laststate{HIGH};
+int OCDN_laststate{HIGH};
+int OCUP_currentstate{};
+int OCDN_currentstate{};
+int octave_multiplier{1};
+
+
+void setup()
+{
+  pinMode(PIN_C,INPUT_PULLUP);
+  pinMode(PIN_Cs,INPUT_PULLUP);
+  pinMode(PIN_D,INPUT_PULLUP);
+  pinMode(PIN_Ds,INPUT_PULLUP);
+  pinMode(PIN_E,INPUT_PULLUP);
+  pinMode(PIN_F,INPUT_PULLUP);
+  pinMode(PIN_Fs,INPUT_PULLUP);
+  pinMode(PIN_G,INPUT_PULLUP);
+  pinMode(PIN_Gs,INPUT_PULLUP);
+  pinMode(PIN_A,INPUT_PULLUP);
+  pinMode(PIN_As,INPUT_PULLUP);
+  pinMode(PIN_H,INPUT_PULLUP);
+  pinMode(PIN_C2,INPUT_PULLUP);
+  pinMode(PIN_BUZZER,OUTPUT);
+  pinMode(PIN_OCUP,INPUT_PULLUP);
+  pinMode(PIN_OCDN,INPUT_PULLUP);
+  Serial.begin(115200);
+  
+}
+
+void loop()
+{
+
+  OCUP_currentstate = digitalRead(PIN_OCUP);
+  OCDN_currentstate = digitalRead(PIN_OCDN);
+  
+  
+  if(digitalRead(PIN_OCUP) == LOW && OCUP_laststate == HIGH && octave_multiplier < 6)
+  {
+    octave_multiplier += 1;
+    
+    C *= 2;
+    D *= 2;
+    E *= 2;
+    F *= 2;
+    G *= 2;
+    A *= 2;
+    H *= 2;
+    C2 *= 2;
+    Cs *= 2;
+    Ds *= 2;
+    Fs *= 2;
+    Gs *= 2;
+    As *= 2;
+
+  }
+
+  OCUP_laststate = OCUP_currentstate;
+
+
+  if(digitalRead(PIN_OCDN) == LOW && OCDN_laststate == HIGH && octave_multiplier > 1)
+  {
+    octave_multiplier -= 1;
+    C /= 2;
+    D /= 2;
+    E /= 2;
+    F /= 2;
+    G /= 2;
+    A /= 2;
+    H /= 2;
+    C2 /= 2;
+    Cs /= 2;
+    Ds /= 2;
+    Fs /= 2;
+    Gs /= 2;
+    As /= 2;
+
+  }
+
+  OCDN_laststate = OCDN_currentstate;
+  
+  if(digitalRead(PIN_C) == LOW && !C_playing)
+  {
+    tone(PIN_BUZZER, C);
+    Serial.println("SOUND");
+    C_playing = true;
+  }
+  
+  else if(digitalRead(PIN_C) == HIGH && C_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    C_playing = false;
+  }
+
+  if(digitalRead(PIN_D) == LOW && !D_playing)
+  {
+    tone(PIN_BUZZER, D);
+    Serial.println("SOUND");
+    D_playing = true;
+  }
+  
+  else if(digitalRead(PIN_D) == HIGH && D_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    D_playing = false;
+  }
+
+  if(digitalRead(PIN_E) == LOW && !E_playing)
+  {
+    tone(PIN_BUZZER, E);
+    Serial.println("SOUND");
+    E_playing = true;
+  }
+  
+  else if(digitalRead(PIN_E) == HIGH && E_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    E_playing = false;
+  }
+
+  if(digitalRead(PIN_F) == LOW && !F_playing)
+  {
+    tone(PIN_BUZZER, F);
+    Serial.println("SOUND");
+    F_playing = true;
+  }
+  
+  else if(digitalRead(PIN_F) == HIGH && F_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    F_playing = false;
+  }
+
+  if(digitalRead(PIN_G) == LOW && !G_playing)
+  {
+    tone(PIN_BUZZER, G);
+    Serial.println("SOUND");
+    G_playing = true;
+  }
+  
+  else if(digitalRead(PIN_G) == HIGH && G_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    G_playing = false;
+  }
+
+  if(digitalRead(PIN_A) == LOW && !A_playing)
+  {
+    tone(PIN_BUZZER, A);
+    Serial.println("SOUND");
+    A_playing = true;
+  }
+  
+  else if(digitalRead(PIN_A) == HIGH && A_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    A_playing = false;
+  }
+
+  if(digitalRead(PIN_H) == LOW && !H_playing)
+  {
+    tone(PIN_BUZZER, H);
+    Serial.println("SOUND");
+    H_playing = true;
+  }
+  
+  else if(digitalRead(PIN_H) == HIGH && H_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    H_playing = false;
+  }
+
+  if(digitalRead(PIN_C2) == LOW && !C2_playing)
+  {
+    tone(PIN_BUZZER, C2);
+    Serial.println("SOUND");
+    C2_playing = true;
+  }
+  
+  else if(digitalRead(PIN_C2) == HIGH && C2_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    C2_playing = false;
+  }
+
+  if(digitalRead(PIN_Cs) == LOW && !Cs_playing)
+  {
+    tone(PIN_BUZZER, Cs);
+    Serial.println("SOUND");
+    Cs_playing = true;
+  }
+  
+  else if(digitalRead(PIN_Cs) == HIGH && Cs_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    Cs_playing = false;
+  }
+
+  if(digitalRead(PIN_Ds) == LOW && !Ds_playing)
+  {
+    tone(PIN_BUZZER, Ds);
+    Serial.println("SOUND");
+    Ds_playing = true;
+  }
+  
+  else if(digitalRead(PIN_Ds) == HIGH && Ds_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    Ds_playing = false;
+  }
+
+  if(digitalRead(PIN_Fs) == LOW && !Fs_playing)
+  {
+    tone(PIN_BUZZER, Fs);
+    Serial.println("SOUND");
+    Fs_playing = true;
+  }
+  
+  else if(digitalRead(PIN_Fs) == HIGH && Fs_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    Fs_playing = false;
+  }
+
+  if(digitalRead(PIN_Gs) == LOW && !Gs_playing)
+  {
+    tone(PIN_BUZZER, Gs);
+    Serial.println("SOUND");
+    Gs_playing = true;
+  }
+  
+  else if(digitalRead(PIN_Gs) == HIGH && Gs_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    Gs_playing = false;
+  }
+
+  if(digitalRead(PIN_As) == LOW && !As_playing)
+  {
+    tone(PIN_BUZZER, As);
+    Serial.println("SOUND");
+    As_playing = true;
+  }
+  
+  else if(digitalRead(PIN_As) == HIGH && As_playing)
+  {
+    noTone(PIN_BUZZER);
+    Serial.println("NO SOUND");
+    As_playing = false;
+  }
+  delay(10);
+}
